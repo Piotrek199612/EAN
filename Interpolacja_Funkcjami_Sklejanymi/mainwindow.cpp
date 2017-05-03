@@ -3,6 +3,8 @@
 #include "funkcje_sklejane.h"
 #include <fstream>
 
+#include "Interval.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -17,12 +19,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    QString x_in = ui->x_edit->toPlainText();
+    x_in.replace(QRegExp("[ \t,:;]{2,}")," ");
+    x_in.remove(QRegExp("^[ \t,:]{1,}"));
+    x_in.remove(QRegExp("[ \t,:]{1,}$"));
+    QString f_in = ui->f_edit->toPlainText();
+    f_in.replace(QRegExp("[ \t,:;]{2,}")," ");
+    f_in.remove(QRegExp("^[ \t,:]{1,}"));
+    f_in.remove(QRegExp("[ \t,:]{1,}$"));
+
     Funkcje_Sklejane tmp(ui->n_edit->value(),
-                         ui->x_edit->toPlainText(),
-                         ui->f_edit->toPlainText(),
+                         x_in,
+                         f_in,
                          ui->f1x0_edit->text(),
                          ui->f1xn_edit->text(),
                          ui->xx_edit->text());
+
+    ui->x_edit->setPlainText(x_in);
+    ui->f_edit->setPlainText(f_in);
     tmp.Wspolczynniki_Funkcji_Sklejanych();
     ui->wynik_label->clear();
     ui->listWidget->clear();
@@ -34,6 +48,17 @@ void MainWindow::on_pushButton_clicked()
             ui->listWidget->addItem("a["+QString::number(j)+"]"+"["+QString::number(i)+"]");
             ui->listWidget->addItem(QString::number(tmp.macierz[j][i], 'e', 14));
         }
+    interval_arithmetic::Interval <long double> a,b;
+    a.Initialize();
+    b.Initialize();
+    //a.a = a.LeftRead( ui->x_edit->toPlainText().toStdString());
+    //a.b = a.RightRead(ui->x_edit->toPlainText().toStdString());
+
+    //b.a = a.LeftRead( ui->x_edit->toPlainText().toStdString());
+    //b.b = a.RightRead(ui->f_edit->toPlainText().toStdString());
+    //ui->x_label->setText(QString::number(a.a, 'e', 26));
+    ui->f_label->setText(QString::number(a.b, 'e', 26));
+    ui->wynik_label->setText(QString::number(a.GetWidth(),'e',50));
 }
 
 void MainWindow::on_actionWczytaj_triggered()

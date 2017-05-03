@@ -112,10 +112,10 @@
    <widget class="QLabel" name="wynik_label">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>440</y>
-      <width>321</width>
-      <height>16</height>
+      <x>0</x>
+      <y>430</y>
+      <width>641</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -125,8 +125,8 @@
    <widget class="QLabel" name="wynik_label_tekst">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>440</y>
+      <x>260</x>
+      <y>460</y>
       <width>41</width>
       <height>16</height>
      </rect>
@@ -187,6 +187,32 @@
      <string>xx</string>
     </property>
    </widget>
+   <widget class="QLabel" name="x_label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>x</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_label">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>40</y>
+      <width>361</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>f</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -194,7 +220,7 @@
      <x>0</x>
      <y>0</y>
      <width>726</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPlik">

@@ -1,5 +1,6 @@
 #include "funkcje_sklejane.h"
 #include <fstream>
+#include <QMessageBox>
 
 Funkcje_Sklejane::Funkcje_Sklejane(int size)
 {
@@ -11,8 +12,7 @@ Funkcje_Sklejane::Funkcje_Sklejane(int size, QString x_in,QString f_in,QString  
     f1x0 = f1x0_in.toDouble();
     f1xn = f1xn_in.toDouble();
     xx = xx_in.toDouble();
-
-    QRegExp rx("(\\ |\\,|\\:|\\t)"); //RegEx for ' ' or ',' or '.' or ':' or '\t'
+    QRegExp rx("(\\ |\\,|\\:|\\t|;)"); //RegEx for ' ' or ',' or ':' or '\t'
     QStringList x_in_list = x_in.split(rx);
     QStringList f_in_list = f_in.split(rx);
 
@@ -195,7 +195,7 @@ long double Funkcje_Sklejane::Wartosci_Funkcji_Sklejanych()
 }
 
 template <class T>
-void Funkcje_Sklejane::Inicjalizuj_Vector(std::vector <T> &tmp,int rozmiar)
+    void Funkcje_Sklejane::Inicjalizuj_Vector(std::vector <T> &tmp,int rozmiar)
 {
     tmp.clear();
     for (int i = 0; i <= rozmiar;i++)

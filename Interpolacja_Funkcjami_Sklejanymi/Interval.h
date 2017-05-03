@@ -836,10 +836,10 @@ Interval<T> DIMul(const Interval<T>& x, const Interval<T>& y) {
 	if ((x.a <= x.b) && (y.a <= y.b))
 		r = IMul(x, y);
 	else {
-/*		xn = (x.a < 0) and (x.b < 0);
+        xn = (x.a < 0) and (x.b < 0);
 		xp = (x.a > 0) and (x.b > 0);
 		yn = (y.a < 0) and (y.b < 0);
-        yp = (y.a > 0) and (y.b > 0);*/
+        yp = (y.a > 0) and (y.b > 0);
 		zero = false;
 		// A, B in H-T
 		if ((xn || xp) && (yn || yp))
