@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    funkcje_sklejane.cpp
+    funkcje_sklejane.cpp \
+    funkcje_sklejane_przedzialy.cpp
 
 HEADERS  += mainwindow.h \
     funkcje_sklejane.h \
-    Interval.h
+    Interval.h \
+    funkcje_sklejane_przedzialy.h
 
 FORMS    += mainwindow.ui
 

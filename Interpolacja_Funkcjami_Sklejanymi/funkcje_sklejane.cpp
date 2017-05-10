@@ -2,6 +2,9 @@
 #include <fstream>
 #include <QMessageBox>
 
+
+#include "Interval.h"
+
 Funkcje_Sklejane::Funkcje_Sklejane(int size)
 {
     //Wczytaj_Dane();
