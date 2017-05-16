@@ -3,8 +3,8 @@
 #include "funkcje_sklejane.h"
 #include "funkcje_sklejane_przedzialy.h"
 #include <fstream>
-
 #include "Interval.h"
+#include <QPen>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +17,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -37,17 +39,47 @@ void MainWindow::on_pushButton_clicked()
                          ui->f1x0_edit->text(),
                          ui->f1xn_edit->text(),
                          ui->xx_edit->text());
-
-        tmp.Wspolczynniki_Funkcji_Sklejanych();
+        std::vector<std::vector<long double>> wspolczynniki_funkcji_sklejanych;
+        wspolczynniki_funkcji_sklejanych = tmp.Wspolczynniki_Funkcji_Sklejanych();
         ui->wynik_label->clear();
-        ui->listWidget->clear();
-        ui->wynik_label->setText(QString::number(tmp.Wartosci_Funkcji_Sklejanych(), 'e', 14));
-        for (int i = 0; i < tmp.n;i++)
-            for (int j = 0; j <=3 ; j++)
-            {
-                ui->listWidget->addItem("a["+QString::number(j)+"]"+"["+QString::number(i)+"]");
-                ui->listWidget->addItem(QString::number(tmp.macierz[j][i], 'e', 14));
-            }
+        ui->tableWidget->clear();
+        ui->tableWidget->setRowCount(tmp.n +1);
+        ui->tableWidget->setColumnCount(5);
+        ui->wynik_label->setText(QString::number(tmp.Wartosci_Funkcji_Sklejanych(), 'e', 17));
+        for (auto r=0; r<tmp.n+1; r++)
+             for (auto c=0; c<=4; c++)
+             {
+                 if (r ==0 && c == 0)
+                 {
+                     QTableWidgetItem* tmp = new QTableWidgetItem(QString::fromStdString("a[i][j]"));
+                     tmp->setTextAlignment(Qt::AlignCenter);
+                     ui->tableWidget->setItem( r, c, tmp);
+                     QBrush brush(QColor(204,204,204,255/2),Qt::SolidPattern);
+                        tmp->setBackground(brush);
+                 }
+                 else if (r == 0 && c!=0)
+                 {
+                     QTableWidgetItem* tmp = new QTableWidgetItem(QString::number(c-1,10));
+                     tmp->setTextAlignment(Qt::AlignCenter);
+                     ui->tableWidget->setItem( r, c, tmp);
+                     QBrush brush(QColor(204,204,204,255/2),Qt::SolidPattern);
+                        tmp->setBackground(brush);
+                 }
+                 else if (c ==0 && r!=0)
+                 {
+                     QTableWidgetItem* tmp = new QTableWidgetItem(QString::number(r-1,10));
+                     tmp->setTextAlignment(Qt::AlignCenter);
+                     ui->tableWidget->setItem( r, c, tmp);
+                     QBrush brush(QColor(204,204,204,255/2),Qt::SolidPattern);
+                        tmp->setBackground(brush);
+                 }
+                 else
+                 {
+                     QTableWidgetItem* tmp = new QTableWidgetItem(QString::number(wspolczynniki_funkcji_sklejanych[c-1][r-1],'E',17));
+                     ui->tableWidget->setItem( r, c, tmp);
+                 }
+             }
+        ui->tableWidget->resizeColumnsToContents();
         ui->x_edit->setPlainText(x_in);
         ui->f_edit->setPlainText(f_in);
     }
@@ -68,14 +100,66 @@ void MainWindow::on_pushButton_clicked()
                          ui->f1xn_edit->text(),
                          ui->xx_edit->text());
         ui->wynik_label->clear();
-        ui->listWidget->clear();
-        interval_arithmetic::Interval<long double> result;
-        result = tmp.Wartosci_Funkcji_Sklejanych();
+        interval_arithmetic::Interval<long double> wartosc_w_punkcie;
+        int st;
+        wartosc_w_punkcie= tmp.Wartosci_Funkcji_Sklejanych(tmp.ilosc_elementow,tmp.wartosci_x,tmp.wartosci_f,tmp.wartosci_f1x0,tmp.wartosci_f1xn,tmp.wartosci_xx,st);
+        std::vector<std::vector<interval_arithmetic::Interval<long double>>> wartosci_wspolczynnikow;
+        wartosci_wspolczynnikow = tmp.Wspolczynniki_Funkcji_Sklejanych(tmp.ilosc_elementow,tmp.wartosci_x,tmp.wartosci_f,tmp.wartosci_f1x0,tmp.wartosci_f1xn,wartosci_wspolczynnikow,st);
         string a,b;
         a.clear();
         b.clear();
-        result.IEndsToStrings(a,b);
+        wartosc_w_punkcie.IEndsToStrings(a,b);
         ui->wynik_label->setText(QString::fromStdString( a+" "+b));
+                ui->tableWidget->clear();
+                ui->tableWidget->setRowCount(tmp.ilosc_elementow +1);
+                ui->tableWidget->setColumnCount(5);
+
+                for (auto r=0; r<tmp.ilosc_elementow+1; r++)
+                     for (auto c=0; c<=4; c++)
+                     {
+                         if (r ==0 && c == 0)
+                         {
+                             QTableWidgetItem* tmp = new QTableWidgetItem(QString::fromStdString("a[i][j]"));
+                             tmp->setTextAlignment(Qt::AlignCenter);
+                             ui->tableWidget->setItem( r, c, tmp);
+                             QBrush brush(QColor(204,204,204,255/2),Qt::SolidPattern);
+                                tmp->setBackground(brush);
+                         }
+                         else if (r == 0 && c!=0)
+                         {
+                             QTableWidgetItem* tmp = new QTableWidgetItem(QString::number(c-1,10));
+                             tmp->setTextAlignment(Qt::AlignCenter);
+                             ui->tableWidget->setItem( r, c, tmp);
+                             QBrush brush(QColor(204,204,204,255/2),Qt::SolidPattern);
+                                tmp->setBackground(brush);
+                         }
+                         else if (c ==0 && r!=0)
+                         {
+                             QTableWidgetItem* tmp = new QTableWidgetItem(QString::number(r-1,10));
+                             tmp->setTextAlignment(Qt::AlignCenter);
+                             ui->tableWidget->setItem( r, c, tmp);
+                             QBrush brush(QColor(204,204,204,255/2),Qt::SolidPattern);
+                                tmp->setBackground(brush);
+                         }
+                         else
+                         {
+                             interval_arithmetic::Interval<long double> inter;
+                             inter = wartosci_wspolczynnikow[c-1][r-1];
+                             inter.IEndsToStrings(a,b);
+
+                             QTableWidgetItem* tmp = new QTableWidgetItem("["+QString::fromStdString(a)+" ; "+QString::fromStdString(b)+"]");
+
+                             QLinearGradient gradient(0, 25,interval_arithmetic::LONGDOUBLE_DIGITS *17, 25);
+                             gradient.setColorAt(0, QColor::fromRgb(0, 215, 255, 255/2));
+                             gradient.setColorAt(1, QColor::fromRgb(255, 0, 0, 255/2));
+
+                             QBrush brush(gradient);
+                                tmp->setBackground(brush);
+
+                             ui->tableWidget->setItem( r, c, tmp);
+                         }
+                     }
+        ui->tableWidget->resizeColumnsToContents();
         ui->x_edit->setPlainText(x_in);
         ui->f_edit->setPlainText(f_in);
     }

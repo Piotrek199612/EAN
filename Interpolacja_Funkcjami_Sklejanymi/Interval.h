@@ -37,7 +37,7 @@ enum IAPrecision {
 };
 
 enum IAOutDigits {
-    LONGDOUBLE_DIGITS = 17, DOUBLE_DIGITS = 17, FLOAT_DIGITS = 17
+    LONGDOUBLE_DIGITS = 20/*17*/, DOUBLE_DIGITS = 17, FLOAT_DIGITS = 17
 };
 
 template<typename T> class Interval {
