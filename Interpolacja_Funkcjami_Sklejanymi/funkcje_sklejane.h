@@ -14,6 +14,7 @@ public:
     int n;
     std::vector<std::vector<long double>> macierz;
     bool Wczytaj_Dane();
+    bool dobre_dane = true;
 private:
 
     long double f1x0,f1xn,xx;

@@ -15,17 +15,41 @@ Funkcje_Sklejane::Funkcje_Sklejane(int size, QString x_in,QString f_in,QString  
     f1x0 = f1x0_in.toDouble();
     f1xn = f1xn_in.toDouble();
     xx = xx_in.toDouble();
-    QRegExp rx("(\\ |\\,|\\:|\\t|;)"); //RegEx for ' ' or ',' or ':' or '\t'
+    QRegExp rx("(\\ |\\,|\\:|\\t)"); //RegEx for ' ' or ',' or ':' or '\t'
     QStringList x_in_list = x_in.split(rx);
     QStringList f_in_list = f_in.split(rx);
 
+
     if (x_in_list.size() == n+1)
-        for (int i = 0;i<=n;i++)
+        for (int i = 0;i<=n ;i++)
+        if (x_in_list[i].contains(QRegExp("^-?[0-9]{1,}$")) || x_in_list[i].contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+        {
             x.push_back(x_in_list[i].toDouble());
+        }
+        else
+        {
+            QMessageBox Msgbox;
+                 Msgbox.setText("Błędne dane x");
+                 Msgbox.exec();
+                 this->dobre_dane = false;
+                 return;
+        }
+
 
     if (f_in_list.size() == n+1)
         for (int i = 0;i<=n;i++)
-            f.push_back(f_in_list[i].toDouble());
+            if (f_in_list[i].contains(QRegExp("^-?[0-9]{1,}$")) || f_in_list[i].contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+            {
+                f.push_back(f_in_list[i].toDouble());
+            }
+            else
+            {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Błędne dane f");
+                     Msgbox.exec();
+                     this->dobre_dane = false;
+                     return;
+            }
 }
 
 std::vector <std::vector<long double>> Funkcje_Sklejane::Wspolczynniki_Funkcji_Sklejanych()
