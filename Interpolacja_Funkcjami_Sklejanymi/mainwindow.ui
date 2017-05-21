@@ -88,6 +88,12 @@
       <height>81</height>
      </rect>
     </property>
+    <property name="lineWrapColumnOrWidth">
+     <number>0</number>
+    </property>
+    <property name="placeholderText">
+     <string>Dane w postaci przedziału [X;Y] lub X</string>
+    </property>
    </widget>
    <widget class="QTextEdit" name="f_edit">
     <property name="geometry">
@@ -97,6 +103,9 @@
       <width>431</width>
       <height>81</height>
      </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Dane w postaci przedziału [X;Y] lub X</string>
     </property>
    </widget>
    <widget class="QLabel" name="wynik_label">

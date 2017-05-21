@@ -38,6 +38,7 @@ void MainWindow::on_pushButton_clicked()
                          ui->f1x0_edit->text(),
                          ui->f1xn_edit->text(),
                          ui->xx_edit->text());
+
         if (tmp.dobre_dane)
         {
         std::vector<std::vector<long double>> wspolczynniki_funkcji_sklejanych;
@@ -182,12 +183,121 @@ void MainWindow::on_pushButton_clicked()
                         }
             }
 
+        QString f1x0_tmp = ui->f1x0_edit->text();
+        interval_arithmetic::Interval<long double> interval_f1x0;
+        if (f1x0_tmp.startsWith("[") && f1x0_tmp.endsWith("]"))
+        {
+            f1x0_tmp.remove("[");
+            f1x0_tmp.remove("]");
+            QStringList ends = f1x0_tmp.split(QRegExp(";"));
+            if (ends[0].contains(QRegularExpression("^-?[0-9]{1,}$")) || ends[0].contains(QRegularExpression("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+            {
+                interval_f1x0.a = interval_arithmetic::Interval<long double>::LeftRead(ends[0].toStdString());
+                interval_f1x0.b = interval_arithmetic::Interval<long double>::RightRead(ends[1].toStdString());
+            }
+            else
+            {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Błędne dane f1x0");
+                     Msgbox.exec();
+                     dobre_dane = false;
+                     return;
+            }
+        }
+        else
+        {
+            if (f1x0_tmp.contains(QRegExp("^-?[0-9]{1,}$")) || f1x0_tmp.contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+            {
+                interval_f1x0 = interval_arithmetic::Interval<long double>::IntRead(f1x0_tmp.toStdString());
+            }
+            else
+            {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Błędne dane f1x0");
+                     Msgbox.exec();
+                     dobre_dane = false;
+                     return;
+            }
+        }
+        QString f1xn_tmp = ui->f1xn_edit->text();
+        interval_arithmetic::Interval<long double> interval_f1xn;
+        if (f1xn_tmp.startsWith("[") && f1xn_tmp.endsWith("]"))
+        {
+            f1xn_tmp.remove("[");
+            f1xn_tmp.remove("]");
+            QStringList ends = f1xn_tmp.split(QRegExp(";"));
+            if (ends[0].contains(QRegularExpression("^-?[0-9]{1,}$")) || ends[0].contains(QRegularExpression("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+            {
+                interval_f1xn.a = interval_arithmetic::Interval<long double>::LeftRead(ends[0].toStdString());
+                interval_f1xn.b = interval_arithmetic::Interval<long double>::RightRead(ends[1].toStdString());
+            }
+            else
+            {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Błędne dane f1xn");
+                     Msgbox.exec();
+                     dobre_dane = false;
+                     return;
+            }
+        }
+        else
+        {
+            if (f1xn_tmp.contains(QRegExp("^-?[0-9]{1,}$")) || f1xn_tmp.contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+            {
+                interval_f1xn = interval_arithmetic::Interval<long double>::IntRead(f1xn_tmp.toStdString());
+            }
+            else
+            {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Błędne dane f1xn");
+                     Msgbox.exec();
+                     dobre_dane = false;
+                     return;
+            }
+        }
+
+        QString xx_tmp = ui->xx_edit->text();
+        interval_arithmetic::Interval<long double> interval_xx;
+        if (xx_tmp.startsWith("[") && xx_tmp.endsWith("]"))
+        {
+            xx_tmp.remove("[");
+            xx_tmp.remove("]");
+            QStringList ends = xx_tmp.split(QRegExp(";"));
+            if (ends[0].contains(QRegularExpression("^-?[0-9]{1,}$")) || ends[0].contains(QRegularExpression("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+            {
+                interval_xx.a = interval_arithmetic::Interval<long double>::LeftRead(ends[0].toStdString());
+                interval_xx.b = interval_arithmetic::Interval<long double>::RightRead(ends[1].toStdString());
+            }
+            else
+            {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Błędne dane xx");
+                     Msgbox.exec();
+                     dobre_dane = false;
+                     return;
+            }
+        }
+        else
+        {
+            if (xx_tmp.contains(QRegExp("^-?[0-9]{1,}$")) || xx_tmp.contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+            {
+                interval_xx= interval_arithmetic::Interval<long double>::IntRead(xx_tmp.toStdString());
+            }
+            else
+            {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Błędne dane xx");
+                     Msgbox.exec();
+                     dobre_dane = false;
+                     return;
+            }
+        }
         Funkcje_Sklejane_Przedzialy tmp(ui->n_edit->value(),
                          wartosci_x,
                          wartosci_f,
-                         ui->f1x0_edit->text(),
-                         ui->f1xn_edit->text(),
-                         ui->xx_edit->text());
+                         interval_f1x0,
+                         interval_f1xn,
+                         interval_xx);
         if (dobre_dane)
         {
         ui->wynik_label->clear();

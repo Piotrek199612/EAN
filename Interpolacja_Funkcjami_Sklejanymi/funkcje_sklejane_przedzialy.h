@@ -7,7 +7,7 @@
 class Funkcje_Sklejane_Przedzialy
 {
 public:
-    Funkcje_Sklejane_Przedzialy(int size, std::vector<interval_arithmetic::Interval<long double>> x_in,std::vector<interval_arithmetic::Interval<long double>> f_in,QString  f1x0_in,QString  f1xn_in,QString  xx_in);
+    Funkcje_Sklejane_Przedzialy(int size, std::vector<interval_arithmetic::Interval<long double>> x_in,std::vector<interval_arithmetic::Interval<long double>> f_in,interval_arithmetic::Interval<long double>  f1x0_in,interval_arithmetic::Interval<long double> f1xn_in,interval_arithmetic::Interval<long double> xx_in);
     interval_arithmetic::Interval<long double> Wartosci_Funkcji_Sklejanych(
                                 int n,
                                 std::vector<interval_arithmetic::Interval<long double>> x,

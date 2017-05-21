@@ -1,12 +1,12 @@
 #include "funkcje_sklejane_przedzialy.h"
 //#include <QObject>
 
-Funkcje_Sklejane_Przedzialy::Funkcje_Sklejane_Przedzialy(int size, std::vector<interval_arithmetic::Interval<long double>> x_in,std::vector<interval_arithmetic::Interval<long double>> f_in,QString  f1x0_in,QString  f1xn_in,QString  xx_in)
+Funkcje_Sklejane_Przedzialy::Funkcje_Sklejane_Przedzialy(int size, std::vector<interval_arithmetic::Interval<long double>> x_in,std::vector<interval_arithmetic::Interval<long double>> f_in,interval_arithmetic::Interval<long double>  f1x0_in,interval_arithmetic::Interval<long double> f1xn_in,interval_arithmetic::Interval<long double> xx_in)
 {
     ilosc_elementow = size;
-    wartosci_f1x0 = interval_arithmetic::Interval<long double>::IntRead(f1x0_in.toStdString());
-    wartosci_f1xn = interval_arithmetic::Interval<long double>::IntRead(f1xn_in.toStdString());
-    wartosci_xx = interval_arithmetic::Interval<long double>::IntRead(xx_in.toStdString());
+    wartosci_f1x0 = f1x0_in;
+    wartosci_f1xn = f1xn_in;
+    wartosci_xx = xx_in;
 
     for (int i = 0; i<=ilosc_elementow;i++)
     {

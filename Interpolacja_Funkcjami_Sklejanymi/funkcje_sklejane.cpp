@@ -12,9 +12,38 @@ Funkcje_Sklejane::Funkcje_Sklejane(int size)
 Funkcje_Sklejane::Funkcje_Sklejane(int size, QString x_in,QString f_in,QString  f1x0_in,QString  f1xn_in,QString  xx_in)
 {
     n = size;
-    f1x0 = f1x0_in.toDouble();
-    f1xn = f1xn_in.toDouble();
-    xx = xx_in.toDouble();
+    if (f1x0_in.contains(QRegExp("^-?[0-9]{1,}$")) || f1x0_in.contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+        f1x0 = f1x0_in.toDouble();
+    else
+    {
+        QMessageBox Msgbox;
+             Msgbox.setText("Błędne dane f1x0");
+             Msgbox.exec();
+             this->dobre_dane = false;
+             return;
+    }
+
+    if (f1xn_in.contains(QRegExp("^-?[0-9]{1,}$")) || f1xn_in.contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+        f1xn = f1xn_in.toDouble();
+    else
+    {
+        QMessageBox Msgbox;
+             Msgbox.setText("Błędne dane f1xn");
+             Msgbox.exec();
+             this->dobre_dane = false;
+             return;
+    }
+
+    if (xx_in.contains(QRegExp("^-?[0-9]{1,}$")) || xx_in.contains(QRegExp("^-?[0-9]{1,}\\.[0-9]{1,}$")))
+        xx = xx_in.toDouble();
+    else
+    {
+        QMessageBox Msgbox;
+             Msgbox.setText("Błędne dane xx");
+             Msgbox.exec();
+             this->dobre_dane = false;
+             return;
+    }
     QRegExp rx("(\\ |\\,|\\:|\\t)"); //RegEx for ' ' or ',' or ':' or '\t'
     QStringList x_in_list = x_in.split(rx);
     QStringList f_in_list = f_in.split(rx);
