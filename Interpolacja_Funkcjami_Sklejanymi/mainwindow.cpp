@@ -292,6 +292,13 @@ void MainWindow::on_pushButton_clicked()
                      return;
             }
         }
+        if (ui->n_edit->value()<1)
+        {
+                QMessageBox Msgbox;
+                     Msgbox.setText("Funkcja Wartosc_Funkcji_Sklejanej zwraca następujący kod błędu st = 1");
+                     Msgbox.exec();
+                     return;
+        }
         Funkcje_Sklejane_Przedzialy tmp(ui->n_edit->value(),
                          wartosci_x,
                          wartosci_f,
@@ -302,10 +309,33 @@ void MainWindow::on_pushButton_clicked()
         {
         ui->wynik_label->clear();
         interval_arithmetic::Interval<long double> wartosc_w_punkcie;
-        int st;
-        wartosc_w_punkcie= tmp.Wartosci_Funkcji_Sklejanych(tmp.ilosc_elementow,tmp.wartosci_x,tmp.wartosci_f,tmp.wartosci_f1x0,tmp.wartosci_f1xn,tmp.wartosci_xx,st);
+        int st = 0;
+        wartosc_w_punkcie= Wartosc_Funkcji_Sklejanej(tmp.ilosc_elementow,tmp.wartosci_x,tmp.wartosci_f,tmp.wartosci_f1x0,tmp.wartosci_f1xn,tmp.wartosci_xx,st);
+        if (st != 0)
+        {
+            QMessageBox Msgbox;
+                 Msgbox.setText("Funkcja Wartosc_Funkcji_Sklejanej zwraca następujący kod błędu st = " + QString::number(st));
+                 Msgbox.exec();
+                 return;
+        }
         std::vector<std::vector<interval_arithmetic::Interval<long double>>> wartosci_wspolczynnikow;
-        wartosci_wspolczynnikow = tmp.Wspolczynniki_Funkcji_Sklejanych(tmp.ilosc_elementow,tmp.wartosci_x,tmp.wartosci_f,tmp.wartosci_f1x0,tmp.wartosci_f1xn,wartosci_wspolczynnikow,st);
+
+        int wiersze = 3;
+        int kolumny = tmp.ilosc_elementow;
+        for (int i = 0; i <= wiersze;i++)
+                wartosci_wspolczynnikow.push_back(std::vector<interval_arithmetic::Interval<long double>>());
+        for (int i = 0; i <= wiersze;i++)
+            for (int j = 0; j<= kolumny;j++)
+                 wartosci_wspolczynnikow[i].push_back(interval_arithmetic::Interval<long double>::IntRead("0.0") );
+        st = 0;
+        Wspolczynniki_Funkcji_Sklejanej(tmp.ilosc_elementow,tmp.wartosci_x,tmp.wartosci_f,tmp.wartosci_f1x0,tmp.wartosci_f1xn,wartosci_wspolczynnikow,st);
+        if (st != 0)
+        {
+            QMessageBox Msgbox;
+                 Msgbox.setText("Funkcja Wspolczynniki_Funkcji_Sklejanej zwraca następujący kod błędu st = " + QString::number(st));
+                 Msgbox.exec();
+                 return;
+        }
         string a,b;
         a.clear();
         b.clear();

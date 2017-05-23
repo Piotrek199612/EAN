@@ -4,26 +4,28 @@
 #include <vector>
 #include "Interval.h"
 
+interval_arithmetic::Interval<long double> Wartosc_Funkcji_Sklejanej(
+                            int n,
+                            std::vector<interval_arithmetic::Interval<long double>> x,
+                            std::vector<interval_arithmetic::Interval<long double>> f,
+                            interval_arithmetic::Interval<long double> f1x0,
+                            interval_arithmetic::Interval<long double> f1xn,
+                            interval_arithmetic::Interval<long double> xx,
+                            int &st);
+
+void Wspolczynniki_Funkcji_Sklejanej(
+    int n,
+    std::vector<interval_arithmetic::Interval<long double>> x,
+    std::vector<interval_arithmetic::Interval<long double>> f,
+    interval_arithmetic::Interval<long double> f1x0,
+    interval_arithmetic::Interval<long double> f1xn,
+    std::vector<std::vector<interval_arithmetic::Interval<long double>>> &a,
+    int &st);
 class Funkcje_Sklejane_Przedzialy
 {
 public:
     Funkcje_Sklejane_Przedzialy(int size, std::vector<interval_arithmetic::Interval<long double>> x_in,std::vector<interval_arithmetic::Interval<long double>> f_in,interval_arithmetic::Interval<long double>  f1x0_in,interval_arithmetic::Interval<long double> f1xn_in,interval_arithmetic::Interval<long double> xx_in);
-    interval_arithmetic::Interval<long double> Wartosci_Funkcji_Sklejanych(
-                                int n,
-                                std::vector<interval_arithmetic::Interval<long double>> x,
-                                std::vector<interval_arithmetic::Interval<long double>> f,
-                                interval_arithmetic::Interval<long double> f1x0,
-                                interval_arithmetic::Interval<long double> f1xn,
-                                interval_arithmetic::Interval<long double> xx,
-                                int st);
-    std::vector<std::vector<interval_arithmetic::Interval<long double>>>  Wspolczynniki_Funkcji_Sklejanych(
-                                int n,
-                                std::vector<interval_arithmetic::Interval<long double>> x,
-                                std::vector<interval_arithmetic::Interval<long double>> f,
-                                interval_arithmetic::Interval<long double> f1x0,
-                                interval_arithmetic::Interval<long double> f1xn,
-                                std::vector<std::vector<interval_arithmetic::Interval<long double>>> a,
-                                int st);
+
     template <class T>
          void Inicjalizuj_Vector(std::vector<interval_arithmetic::Interval<T>> &tmp,int rozmiar);
     template <class T>
