@@ -43,11 +43,30 @@ void MainWindow::on_pushButton_clicked()
         {
         std::vector<std::vector<long double>> wspolczynniki_funkcji_sklejanych;
         wspolczynniki_funkcji_sklejanych = tmp.Wspolczynniki_Funkcji_Sklejanych();
+        if (tmp.st != 0)
+        {
+            QMessageBox Msgbox;
+                 Msgbox.setText("Funkcja Wartosc_Funkcji_Sklejanej zwraca następujący kod błędu st = "+QString::number(tmp.st));
+                 Msgbox.exec();
+                 //dobre_dane = false;
+                 ui->tableWidget->clear();
+                 return;
+        }
+
         ui->wynik_label->clear();
         ui->tableWidget->clear();
         ui->tableWidget->setRowCount(tmp.n +1);
         ui->tableWidget->setColumnCount(5);
         ui->wynik_label->setText(QString::number(tmp.Wartosci_Funkcji_Sklejanych(), 'e', 17));
+        if (tmp.st != 0)
+        {
+            QMessageBox Msgbox;
+                 Msgbox.setText("Funkcja Wartosc_Funkcji_Sklejanej zwraca następujący kod błędu st = "+QString::number(tmp.st));
+                 Msgbox.exec();
+                 ui->tableWidget->clear();
+                 //dobre_dane = false;
+                 return;
+        }
         for (auto r=0; r<tmp.n+1; r++)
              for (auto c=0; c<=4; c++)
              {

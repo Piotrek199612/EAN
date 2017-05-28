@@ -83,7 +83,7 @@ Funkcje_Sklejane::Funkcje_Sklejane(int size, QString x_in,QString f_in,QString  
 
 std::vector <std::vector<long double>> Funkcje_Sklejane::Wspolczynniki_Funkcji_Sklejanych()
 {
-    int st,i;
+    int i;
     long double u,v,y,z,xi;
     macierz = Inicjalizuj_Macierz<long double>(3,n);
 
@@ -97,12 +97,10 @@ std::vector <std::vector<long double>> Funkcje_Sklejane::Wspolczynniki_Funkcji_S
     {
         st = 0;
         i = -1;
-        do
-        {
-            i++;
-            for (int k = i+1;k<=n;k++)
-                if (x[i] == x[k]) st = 2;
-        }while(! (i <= n-1 || st == 2));
+        for (int i = 0; i <=n;i++)
+            for (int j = 0; j<=n;j++)
+                if (i!=j && x[i] == x[j])
+                    st = 2;
     }
 
     if (st == 0)
@@ -167,7 +165,6 @@ long double Funkcje_Sklejane::Wartosci_Funkcji_Sklejanych()
     int i;
     long double u,y,z;
     bool found;
-    int st;
     std::vector <long double> a,b,c,d;
     Inicjalizuj_Vector(a,3);
     Inicjalizuj_Vector(b,n);
@@ -180,12 +177,10 @@ long double Funkcje_Sklejane::Wartosci_Funkcji_Sklejanych()
     {
         st = 0;
         i = -1;
-        do
-        {
-            i++;
-            for (int k = i+1;k<=n;k++)
-                if (x[i] == x[k]) st = 2;
-        }while(! (i <= n-1 || st == 2));
+        for (int i = 0; i <=n;i++)
+            for (int j = 0; j<=n;j++)
+                if (i!=j && x[i] == x[j])
+                    st = 2;
      }
         if (st == 0)
         {
